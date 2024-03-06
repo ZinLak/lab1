@@ -7,7 +7,6 @@
 
 Фокин Даниил ИСТбд-13
 """
-
 def is_number(lexeme):
     return lexeme.isdigit()
 
@@ -23,8 +22,10 @@ def process_lexeme(lexeme):
 
 def process_number(number):
     global max_value
+    global lexeme
     e = 2
     digits = [int(digit) for digit in str(number)]
+    startDigits = "".join(map(str, digits))
     swapped_digits = ''
     for i in range(0, len(digits)-1):
         if digits[i] == digits[i+1]:
@@ -35,13 +36,14 @@ def process_number(number):
         else:
             swapped_digits = swapped_digits + str(digits[i+1]) + '0'*e + str(digits[i])
             digits[i],digits[i+1] = digits[i+1], digits[i]
-            e = e + 2
+            #e = e + 2
             if len(digits) > i+2:
                 if digits[i+1] != digits[i+2]:
                     swapped_digits = swapped_digits[:-1]
     swapped_digits = int(swapped_digits)
     if max_value < swapped_digits:
         max_value = swapped_digits
+        lexeme = startDigits
 
 def convert_number_to_words(number):
     d_db = {'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять', '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять',}
@@ -73,6 +75,6 @@ with open('text.txt', 'r', encoding='utf-8') as file:
         buffer = file.read(buffer_len)
 if lexeme_found:
     if max_value != float('-inf'):
-        print('\nОтвет:', convert_number_to_words(max_value))
+        print('\nИсходное число:', lexeme, '\nОбработанное число:', max_value,'\nОтвет:', convert_number_to_words(max_value))
     else:
         print('\nЛексем в файле не осталось или лексемы не удовлетворяют условию (в данном случае проверьте файл и(или) замените *.txt на другой). \nПрограмма завершает работу.')
