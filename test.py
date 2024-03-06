@@ -19,8 +19,19 @@ def process_number(number):
     for i in range(0, len(digits)-1):
         if digits[i] == digits[i+1]:
             swapped_digits = swapped_digits + str(digits[i])
+            if len(digits)-1 <= i+1:
+                if all(elem == digits[0] for elem in digits):
+                    swapped_digits = swapped_digits + str(digits[-1])
         else:
-            swapped_digits = swapped_digits + 
+            swapped_digits = swapped_digits + str(digits[i+1]) + '0'*e + str(digits[i])
+            digits[i],digits[i+1] = digits[i+1], digits[i]
+            e = e + 2
+            if len(digits) > i+2:
+                if digits[i+1] != digits[i+2]:
+                    swapped_digits = swapped_digits[:-1]
+    swapped_digits = int(swapped_digits)
+    if max_value < swapped_digits:
+        max_value = swapped_digits
 
 def convert_number_to_words(number):
     d_db = {'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять', '6': 'шесть', '7': 'семь', '8': 'восемь', '9': 'девять',}
